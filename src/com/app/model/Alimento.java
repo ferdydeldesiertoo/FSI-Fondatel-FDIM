@@ -23,6 +23,16 @@ public class Alimento {
         this.estado = estado;
     }
 
+    public Alimento(String nombre_alimento, String descripcion,
+                    double precio, byte[] foto, Categoria categoria, EstadoAlimento estado) {
+        this.nombreAlimento = nombre_alimento;
+        this.descripcion = descripcion;
+        this.precio = precio;
+        this.foto = foto;
+        this.categoria = categoria;
+        this.estado = estado;
+    }
+
     // Getters y Setters
     public int getIdAlimento() { return idAlimento; }
     public void setIdAlimento(int idAlimento) { this.idAlimento = idAlimento; }

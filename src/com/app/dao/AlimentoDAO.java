@@ -21,7 +21,7 @@ public class AlimentoDAO implements DAO<Alimento, Integer> {
     @Override
     public List<Alimento> leerTodos() {
         List<Alimento> alimentos = new ArrayList<>();
-        String sql = "SELECT * FROM alimentos ORDER BY categoria, nombre_alimento";
+        String sql = "SELECT * FROM alimentos ORDER BY id_alimento";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ResultSet rs = ps.executeQuery();

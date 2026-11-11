@@ -13,6 +13,6 @@ public enum EstadoMesa {
 
     @Override
     public String toString() {
-        return super.toString();
+        return this.value;
     }
 }

@@ -12,6 +12,6 @@ public enum EstadoAlimento {
 
     @Override
     public String toString() {
-        return super.toString();
+        return this.value;
     }
 }

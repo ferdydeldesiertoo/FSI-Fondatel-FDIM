@@ -14,6 +14,6 @@ public enum Turno {
 
     @Override
     public String toString() {
-        return super.toString();
+        return this.value;
     }
 }

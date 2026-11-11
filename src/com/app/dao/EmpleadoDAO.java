@@ -70,13 +70,34 @@ public class EmpleadoDAO implements DAO<Empleado, String> {
             ps.setString(4, entidad.getUsername());
             ps.setString(5, entidad.getNip());
             ps.setString(6, entidad.getEstadoEmpleado().name());
-            // El código del empleado va al final para el WHERE
             ps.setString(7, entidad.getCodigoEmpleado());
 
             return ps.executeUpdate() > 0;
         } catch (Exception e) {
             System.out.println("Error al actualizar empleado: " + e.getMessage());
             return false;
+        }
+    }
+
+    public EmpleadoSesion iniciarSesion(String username, String password) {
+        String sql = "SELECT codigo_empleado, nombre_empleado, puesto, turno, username FROM empleados WHERE " +
+                "username = ? AND nip = ? AND estado_empleado = 'ACTIVO'";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet rs = ps.executeQuery();
+            EmpleadoSesion sesion = null;
+
+            while (rs.next()) {
+                sesion = mapearEmpleadoSesion(rs);
+            }
+
+            return sesion;
+        } catch (Exception e) {
+            System.out.println("Error al iniciar sesion: " + e.getMessage());
+            return null;
         }
     }
 
@@ -105,4 +126,16 @@ public class EmpleadoDAO implements DAO<Empleado, String> {
 
         return new Empleado(codigo, nombre, puesto, turno, username, nip, estado);
     }
+
+    private EmpleadoSesion mapearEmpleadoSesion(ResultSet rs) throws SQLException {
+        String codigo = rs.getString("codigo_empleado");
+        String nombre = rs.getString("nombre_empleado");
+        Puesto puesto = Puesto.valueOf(rs.getString("puesto").toUpperCase());
+        Turno turno = Turno.valueOf(rs.getString("turno").toUpperCase());
+        String username = rs.getString("username");
+
+        return new EmpleadoSesion(codigo, nombre, puesto, turno, username);
+    }
+
+
 }
